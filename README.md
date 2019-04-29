@@ -126,7 +126,27 @@ Volume 3: VM
 It is possible that multiple hashes are extracted because there are multiple UUID on the system.
 Normally, the first one is the right one (the *Local Open Directory User*).
 
-To be sure, you can double-check this by attaching your DMG to a macOS and by typing in terminal:
+To be sure, you can double-check this by:
+
+Attaching your DMG to a macOS 
+```
+hdiutil attach <image.dmg> -blocksize 4096 -nomount
+```
+
+Select the correct APFS Volume Disk and type:
 ```
 diskutil apfs listcryptousers /dev/diskXsY
+Cryptographic users for diskXsY (3 found)
+|
++-- XXXXXXXX-A79A-4E2F-A7BB-66917C8F4XXX
+|   Type: Local Open Directory User
+|
++-- XXXXXXXX-B618-4ED6-BD8D-50F361C27XXX
+|   Type: iCloud Recovery User
+|   Note: Unlock with iCloud account data + iCloud Recovery External Key data
+|
++-- XXXXXXXX-0000-11AA-AA11-00306543EXXX
+    Type: iCloud Recovery External Key
+    Note: Stores partial credentials for the iCloud Recovery User
 ```
+It's the UUID of *Local Open Directory User* that we want.
