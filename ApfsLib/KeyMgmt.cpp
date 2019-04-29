@@ -293,9 +293,9 @@ void Keybag::dump(std::ostream &st, Keybag *cbag, const apfs_uuid_t &vuuid)
 	st << endl;
 #endif
 
-	st << "Version : " << setw(4) << m_kl->kl_version << endl;
+	/*st << "Version : " << setw(4) << m_kl->kl_version << endl;*/
 	st << "Keys    : " << setw(4) << m_kl->kl_nkeys << endl;
-	st << "Bytes   : " << setw(8) << m_kl->kl_nbytes << endl;
+	/*st << "Bytes   : " << setw(8) << m_kl->kl_nbytes << endl;*/
 	st << endl;
 
 	s = GetKeyCnt();
@@ -326,9 +326,9 @@ void Keybag::dump(std::ostream &st, Keybag *cbag, const apfs_uuid_t &vuuid)
 		}
 
 		st << "Key " << k << ":" << endl;
-		st << "UUID    : " << uuidstr(ke->ke_uuid) << endl;
+		/*st << "UUID    : " << uuidstr(ke->ke_uuid) << endl;
 		st << "Type    : " << setw(4) << ke->ke_tag << " [" << typestr << "]" << endl;
-		st << "Length  : " << setw(4) << ke->ke_keylen << endl;
+		st << "Length  : " << setw(4) << ke->ke_keylen << endl;*/
 		/* Skip the ke->_padding_ */
 
 		// DumpHex(st, kd.data.data, kd.data.size);
@@ -344,10 +344,11 @@ void Keybag::dump(std::ostream &st, Keybag *cbag, const apfs_uuid_t &vuuid)
 
 				if (KeyManager::DecodeBlobHeader(bhdr, bd))
 				{
-					st << "[Blob Header]" << endl;
+					/*st << "[Blob Header]" << endl;
 					st << "Unk 80  : " << bhdr.unk_80 << endl;
 					st << "HMAC    : " << hexstr(bhdr.hmac, sizeof(bhdr.hmac)) << endl;
-					st << "Salt    : " << hexstr(bhdr.salt, sizeof(bhdr.salt)) << endl;
+					st << "Salt    : " << hexstr(bhdr.salt, sizeof(bhdr.salt)) << endl;*/
+
 #ifdef DUMP_RAW_KEYS
 					st << "Data    :" << endl;
 					DumpHex(st, bhdr.blob.data, bhdr.blob.size);
@@ -358,10 +359,10 @@ void Keybag::dump(std::ostream &st, Keybag *cbag, const apfs_uuid_t &vuuid)
 
 					if (KeyManager::DecodeVEKBlob(vek, bhdr.blob))
 					{
-						st << "[VEK]" << endl;
+						/*st << "[VEK]" << endl;
 						st << "Unk 80  : " << vek.unk_80 << endl;
 						st << "UUID    : " << uuidstr(vek.uuid) << endl;
-						st << "Unk 82  : " << setw(8) << vek.unk_82.unk_00 << ' ' << setw(4) << vek.unk_82.unk_04 << ' ';
+						st << "Unk 82  : " << setw(8) << vek.unk_82.unk_00 << ' ' << setw(4) << vek.unk_82.unk_04 << ' ';*/
 						st << setw(2) << static_cast<int>(vek.unk_82.unk_06) << ' ' << setw(2) << static_cast<int>(vek.unk_82.unk_07) << endl;
 						st << "VEK Wrpd: " << hexstr(vek.wrapped_vek, sizeof(vek.wrapped_vek)) << endl;
 						st << endl;
@@ -398,10 +399,10 @@ void Keybag::dump(std::ostream &st, Keybag *cbag, const apfs_uuid_t &vuuid)
 
 				if (KeyManager::DecodeBlobHeader(bhdr, bd))
 				{
-					st << "[Blob Header]" << endl;
+					/*st << "[Blob Header]" << endl;
 					st << "Unk 80  : " << bhdr.unk_80 << endl;
 					st << "HMAC    : " << hexstr(bhdr.hmac, sizeof(bhdr.hmac)) << endl;
-					st << "Salt    : " << hexstr(bhdr.salt, sizeof(bhdr.salt)) << endl;
+					st << "Salt    : " << hexstr(bhdr.salt, sizeof(bhdr.salt)) << endl;*/
 #ifdef DUMP_RAW_KEYS
 					st << "Data    :" << endl;
 					DumpHex(st, bhdr.blob.data, bhdr.blob.size);
@@ -412,13 +413,13 @@ void Keybag::dump(std::ostream &st, Keybag *cbag, const apfs_uuid_t &vuuid)
 
 					if (KeyManager::DecodeKEKBlob(kek, bhdr.blob))
 					{
-						st << "[KEK]" << endl;
-						st << "Unk 80  : " << kek.unk_80 << endl;
+						/*st << "[KEK]" << endl;
+						st << "Unk 80  : " << kek.unk_80 << endl;*/
 						st << "UUID    : " << uuidstr(kek.uuid) << endl;
-						st << "Unk 82  : " << setw(8) << kek.unk_82.unk_00 << ' ' << setw(4) << kek.unk_82.unk_04 << ' ';
-						st << setw(2) << static_cast<int>(kek.unk_82.unk_06) << ' ' << setw(2) << static_cast<int>(kek.unk_82.unk_07) << endl;
+						/*st << "Unk 82  : " << setw(8) << kek.unk_82.unk_00 << ' ' << setw(4) << kek.unk_82.unk_04 << ' ';
+						st << setw(2) << static_cast<int>(kek.unk_82.unk_06) << ' ' << setw(2) << static_cast<int>(kek.unk_82.unk_07) << endl;*/
 						st << "KEK Wrpd: " << hexstr(kek.wrapped_kek, sizeof(kek.wrapped_kek)) << endl;
-						st << "Iterat's: " << dec << kek.iterations << hex << endl;
+						st << "Iterat's: " << dec << kek.iterations << endl;
 						st << "Salt    : " << hexstr(kek.salt, sizeof(kek.salt)) << endl;
 						st << endl;
 
@@ -566,12 +567,12 @@ bool KeyManager::GetVolumeKey(uint8_t* vek, const apfs_uuid_t& volume_uuid, cons
 	const keybag_entry_t *ke_recs;
 
 	if (g_debug & Dbg_Crypto)
-	{
+	/*{
 		std::cout.setf(std::ios::hex | std::ios::uppercase);
 		std::cout.fill('0');
 
 		m_container_bag.dump(std::cout, nullptr, volume_uuid);
-	}
+	}*/
 
 	ke_recs = m_container_bag.FindKey(volume_uuid, 3);
 	if (!ke_recs)
@@ -590,6 +591,7 @@ bool KeyManager::GetVolumeKey(uint8_t* vek, const apfs_uuid_t& volume_uuid, cons
 	if (g_debug & Dbg_Crypto)
 		recs_bag.dump(std::cout, &m_container_bag, volume_uuid);
 
+
 	uint8_t dk[0x20];
 	uint8_t kek[0x20] = { 0 };
 	uint64_t iv;
@@ -602,6 +604,7 @@ bool KeyManager::GetVolumeKey(uint8_t* vek, const apfs_uuid_t& volume_uuid, cons
 	int k;
 
 	// Check all KEKs for any valid KEK.
+	int type = 1;
 	for (k = 0; k < cnt; k++)
 	{
 		ke_kek = recs_bag.GetKey(k);
@@ -627,9 +630,11 @@ bool KeyManager::GetVolumeKey(uint8_t* vek, const apfs_uuid_t& volume_uuid, cons
 		case 0x00:
 		case 0x10:
 			rc = Rfc3394_KeyUnwrap(kek, kek_blob.wrapped_kek, 0x20, dk, AES::AES_256, &iv);
+			type = 2;
 			break;
 		case 0x02:
 			rc = Rfc3394_KeyUnwrap(kek, kek_blob.wrapped_kek, 0x10, dk, AES::AES_128, &iv);
+			type = 1;
 			break;
 		default:
 			std::cerr << "Unknown KEK key flags 82/00 = " << std::hex << kek_blob.unk_82.unk_00 << ". Please file a bug report." << std::endl;
@@ -637,7 +642,13 @@ bool KeyManager::GetVolumeKey(uint8_t* vek, const apfs_uuid_t& volume_uuid, cons
 			break;
 		}
 
-		if (g_debug & Dbg_Crypto)
+		// Hack in order to extract hash in the correct format (credits to @kholia)
+		std::cout << std::endl << "Formatted hash to use with Hashcat. Check corresponding UUID." << std::endl;
+                std::cout << "-------------------------------------------------------------" << std::endl;
+                std::cout <<  "$fvde$" << type << "$" << sizeof(kek_blob.salt) << "$" << hexstr(kek_blob.salt, sizeof(kek_blob.salt)) << "$" << kek_blob.iterations << "$" << hexstr(kek_blob.wrapped_kek, sizeof(kek_blob.wrapped_kek)) << std::endl;
+                std::cout << std::endl << std::endl;
+
+		if (g_debug & Dbg_Crypto & false)
 		{
 			std::cout << "PW Key  : " << hexstr(dk, sizeof(dk)) << std::endl;
 			std::cout << "KEK Wrpd: " << hexstr(kek_blob.wrapped_kek, sizeof(kek_blob.wrapped_kek)) << std::endl;
