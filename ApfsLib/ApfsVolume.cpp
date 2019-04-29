@@ -79,9 +79,11 @@ bool ApfsVolume::Init(paddr_t apsb_paddr)
 			if (m_container.GetPasswordHint(str, m_sb.apfs_vol_uuid))
 				std::cout << "Hint: " << str << std::endl;
 
-			std::cout << "Enter Password: ";
-			GetPassword(str);
-
+			// Put a fake password in order to auto-complete
+			// std::cout << "Enter Password: ";
+			// GetPassword(str);
+			str = "fake_password";
+			
 			if (!m_container.GetVolumeKey(vek, m_sb.apfs_vol_uuid, str.c_str()))
 			{
 				std::cout << "Wrong password!" << std::endl;
