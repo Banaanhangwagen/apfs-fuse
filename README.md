@@ -37,7 +37,7 @@ Development tools:
 * gcc-c++ (or clang++)
 * git (for cloning)
 
-Example for Linux:
+Example (tested on Ubuntu 19.04 and Kali 2019.2):
 ```
 sudo apt update
 sudo apt install fuse libfuse3-dev bzip2 libbz2-dev cmake g++ git libattr1-dev zlib1g-dev
@@ -56,7 +56,7 @@ Compile the driver:
 mkdir build
 cd build
 cmake ..
-ccmake . # Only if you want to change build options
+ccmake . ## Only if you want to change build options; for example: when you want to use 'FUSE2' instead
 make
 ```
 
