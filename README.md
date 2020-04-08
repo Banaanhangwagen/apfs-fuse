@@ -24,20 +24,8 @@ should just report an error.
 
 ## Usage
 
-### Compile the source code
-The following libraries are needed (including the -dev/-devel packages):
-
-* FUSE 3.0 or greater
-* zlib1g-dev
-* bzip2
-* libattr (on some Linux distributions)
-
-Development tools:
-* cmake
-* gcc-c++ (or clang++)
-* git (for cloning)
-
-Example (tested on Ubuntu 19.04 and Kali 2019.2):
+### Compile the source code (tested on Ubuntu 19.04 and Kali 2019.2)
+Prerequisites :
 ```
 sudo apt update
 sudo apt install fuse libfuse3-dev bzip2 libbz2-dev cmake g++ git libattr1-dev zlib1g-dev
@@ -56,14 +44,14 @@ Compile the driver:
 mkdir build
 cd build
 cmake ..
-ccmake . ## Only if you want to change build options; for example: when you want to use 'FUSE2' instead
+ccmake . ## Only needed if you want to change build options; for example: when you want to use 'FUSE2' instead
 make
 ```
 
 
 ### Extract the hash
 ```
-$ sudo ./bin/apfs-dump-quick <image.dmg> <log.txt>
+$ sudo ./build/apfs-dump-quick <image.dmg> <log.txt>
 ```
 
 
@@ -128,7 +116,11 @@ Normally, the first one is the right one (the *Local Open Directory User*).
 
 To be sure, you can double-check this by:
 
-Attaching your DMG to a macOS 
+Attach your DMG to a macOS: 
+```
+hdiutil attach <image.dmg> -nomount
+```
+If this does not work, try:
 ```
 hdiutil attach <image.dmg> -blocksize 4096 -nomount
 ```
@@ -149,4 +141,4 @@ Cryptographic users for diskXsY (3 found)
     Type: iCloud Recovery External Key
     Note: Stores partial credentials for the iCloud Recovery User
 ```
-It's the UUID of *Local Open Directory User* that we want.
+It's the UUID of *Local Open Directory User* that we want. Cross-check with *apfs-dump-quick* output.
