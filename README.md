@@ -110,12 +110,16 @@ Volume 3: VM
 ```
 
 
-### UUID
+## UUID
 It is possible that multiple hashes are extracted because there are multiple UUID on the system.
 Normally, the first one is the right one (the *Local Open Directory User*).
 
 To be sure, you can double-check this by:
 
+### Method 1
+Search for `\Preboot\[GUID]\var\db\CryptoUserInfo.plist` and read the mentionend UUID just before the username.
+
+### Method 2
 Attach your DMG to a macOS: 
 ```
 hdiutil attach <image.dmg> -nomount
